@@ -98,7 +98,7 @@ def create_pdf(name, age, gender, feature_values, risk_label, risk_score):
     content.append(Spacer(1, 12))
 
     plt.figure()
-    plt.bar(["Risk"], [prob])
+    plt.bar(["Risk"], [prob_malignant])
     plt.ylim(0, 1)
     plt.title("Risk Score")
     risk_img = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
