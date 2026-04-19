@@ -97,17 +97,16 @@ def create_pdf(name, age, gender, feature_values, risk_label, risk_score):
     content.append(Paragraph(f"Risk Score: {risk_score:.2f}", styles["Normal"]))
     content.append(Spacer(1, 12))
 
-    plt.figure(figsize=(6, 2.8))
-    plt.barh(["Low", "Medium", "High"], [0.35, 0.70, 1.0], color=["#60A5FA", "#FBBF24", "#F87171"])
-    plt.axvline(risk_score, linestyle="--", color="#111827", linewidth=2)
-    plt.title("Risk Position")
-    chart_file = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
-    plt.tight_layout()
-    plt.savefig(chart_file.name, bbox_inches="tight")
+    plt.figure()
+    plt.bar(["Risk"], [prob])
+    plt.ylim(0, 1)
+    plt.title("Risk Score")
+    risk_img = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
+    plt.savefig(risk_img.name, bbox_inches="tight")
     plt.close()
 
-    content.append(Paragraph("Risk Visualization", styles["Heading3"]))
-    content.append(Image(chart_file.name, width=420, height=200))
+    content.append(Paragraph("Risk Visualization:", styles["Heading3"]))
+    content.append(Image(risk_img.name, width=400, height=200))
     content.append(Spacer(1, 12))
     content.append(
         Paragraph(
